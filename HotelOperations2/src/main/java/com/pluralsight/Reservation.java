@@ -2,49 +2,26 @@ package com.pluralsight;
 
 public class Reservation {
     String roomType;
-    double price;
     int numberOfNights;
-    boolean isWeekend;
+    boolean weekend;
 
 
-    public Reservation(String roomType, double price, int numberOfNights, boolean isWeekend) {
+    public Reservation(String roomType, int numberOfNights, boolean weekend) {
         this.roomType = roomType;
-
-                if (roomType.equalsIgnoreCase("King")) {
-                    this.price = 139.00;
-        }
-                else if (roomType.equalsIgnoreCase("Double")) {
-                    this.price = 124.00;
-                }
-                else {
-                    this.price = price; // set the prices as they are.
-                }
-                if (isWeekend) {
-                    this.price *= 1.1; // increase the price by 10%
-                }
         this.numberOfNights = numberOfNights;
-
-        this.isWeekend = isWeekend;
+        this.weekend = weekend;
     }
 
     public String getRoomType() {
-        return roomType;
+        return this.roomType;
     }
 
     public void setRoomType(String roomType) {
         this.roomType = roomType;
     }
 
-    public double getPrice() {
-        return price;
-    }
-
-    public void setPrice(double price) {
-        this.price = price;
-    }
-
     public int getNumberOfNights() {
-        return numberOfNights;
+        return this.numberOfNights;
     }
 
     public void setNumberOfNights(int numberOfNights) {
@@ -52,15 +29,25 @@ public class Reservation {
     }
 
     public boolean isWeekend() {
-        return isWeekend;
+        return this.weekend;
     }
 
     public void setWeekend(boolean weekend) {
-        isWeekend = weekend;
+        this.weekend = weekend;
     }
+
+    public double getPrice() {
+        double weekendFactor = (this.weekend) ? 1.10 : 1; //ternary
+
+        if(this.roomType.equalsIgnoreCase("king")) {
+            return 139.00 * weekendFactor;
+        } else {
+            return 124.00 * weekendFactor;
+        }
+    }
+
 
     public double getReservationTotal() {
-        return price * numberOfNights;
+        return this.numberOfNights * this.getPrice();
     }
-
 }
